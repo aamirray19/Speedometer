@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: speeduser
+      POSTGRES_PASSWORD: speedpass
+      POSTGRES_DB: speeddb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  mqtt:
+    image: eclipse-mosquitto:2.0
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  backend:
+    build: ./backend
+    environment:
+      DB_HOST: db
+      DB_NAME: speeddb
+      DB_USER: speeduser
+      DB_PASS: speedpass
+      MQTT_BROKER: mqtt
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - mqtt
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  simulator:
+    build: ./simulator
+    depends_on:
+      - mqtt
+    environment:
+      MQTT_BROKER: mqtt
+
+volumes:
+  postgres_data:
