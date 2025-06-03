@@ -27,7 +27,7 @@ docker-compose down
 Please Find the required Documentation below.
 
 
-[Documentation](https://docs.google.com/document/d/1h9S8u-HeyAO_PL6vFmN8Sz3dtDbDy8ldcmWokHplNT4/edit?usp=sharing)
+[Documentation](https://drive.google.com/file/d/1Zf1lI9gUgPZ3dKF1z5pjyQ3f5awTRzK9/view?usp=sharing)
 
 
 ## Working
